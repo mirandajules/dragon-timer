@@ -41,10 +41,8 @@ body{
   overflow:hidden;
 }
 .screen{
-  position:relative;
-  width:var(--w);
-  height:100vh;height:100dvh;
-  margin:0 auto;
+  position:fixed;top:0;bottom:0;left:50%;
+  width:var(--w);margin-left:calc(var(--w) / -2);
   display:flex;flex-direction:column;
   overflow:hidden;
 }
@@ -80,7 +78,7 @@ body{
   color:var(--ink);
 }
 .stage{
-  width:var(--w);height:var(--w);flex-shrink:0;
+  width:var(--w);height:var(--w);flex-shrink:0;margin-top:auto;margin-bottom:calc(var(--w) * -.012);
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%);
   mask-image:linear-gradient(to bottom,transparent 0,#000 14%);
 }
@@ -107,21 +105,21 @@ body{
 }
 .close svg{width:22px;height:22px;display:block}
 .close:focus-visible{outline:2px solid var(--focus);outline-offset:-4px;border-radius:12px}
-.toast{
-  position:absolute;z-index:6;left:calc(var(--u) * 24);right:calc(var(--u) * 24);
-  bottom:calc(max(env(safe-area-inset-bottom,0px),16px) + var(--u) * 24);
-  padding:12px 16px;border-radius:16px;text-align:center;
-  background:rgba(42,29,24,.88);color:#fff;font:600 15px/1.3 system-ui,sans-serif;
-  opacity:0;pointer-events:none;transition:opacity 200ms ease-out;
+.bye{
+  position:fixed;inset:0;z-index:20;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  padding:24px;text-align:center;color:var(--ink);
+  background:#FFFFFF url(design/background-clouds.webp) center top / cover no-repeat;
 }
-.toast.show{opacity:1}
+.bye.show{display:flex}
+.bye h2{margin:0;font-size:44px;line-height:1.1;font-weight:900}
+.bye p{margin:0;font:600 18px/1.35 system-ui,sans-serif;max-width:18em}
+.bye button{margin-top:8px;min-height:48px;padding:0 28px;border-radius:24px;border:2px solid var(--card-edge);background:var(--card-bg);font:700 17px system-ui,sans-serif;color:var(--ink);cursor:pointer;box-shadow:var(--card-shadow)}
 @media (prefers-reduced-motion:reduce){.card__face{transition:none}}
 </style>
 </head>
 <body>
 <main class="screen">
   <button type="button" class="close" id="close" aria-label="Close app"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
-  <div class="toast" id="toast" role="status"></div>
   <div class="cards">
     <button type="button" class="card" aria-label="Wash hands, 40 seconds" aria-pressed="false" data-task="hands">
       <span class="card__face"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 64 64" stroke-linecap="round" stroke-linejoin="round"><defs><filter id="dt-wash-1" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="2"></feTurbulence><feDisplacementMap in="SourceGraphic" scale="4" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter><filter id="dt-ink-1" x="-15%" y="-15%" width="130%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.11" numOctaves="2" seed="5"></feTurbulence><feDisplacementMap in="SourceGraphic" scale="2.3" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter></defs><g filter="url(#dt-wash-1)" stroke="none"><path d="M19.6 54.6 L19.6 44.6 C14.6 41.6 10.6 36.6 10.6 32.6 C10.6 29.6 13.6 28.6 15.6 30.1 L19.6 33.6 L19.6 19.6 C19.6 16.1 25.1 16.1 25.1 19.6 L25.4 14.6 C25.4 11.1 30.9 11.1 30.9 14.6 L31.2 15.6 C31.2 12.1 36.7 12.1 36.7 15.6 L37 20.6 C37 17.3 42.2 17.3 42.2 20.6 L42.2 38.6 C42.2 45.6 38.6 50.6 35.6 52.6 L35.6 54.6 Z" fill="#f4c9a6"></path><ellipse cx="30" cy="40" rx="7" ry="5" fill="#ee9f8c" fill-opacity="0.45"></ellipse><path d="M15.5 52.5 L38.5 52.5 L39.5 62.5 L14.5 62.5 Z" fill="#6c9fd4"></path><circle cx="49" cy="22" r="7.6" fill="#d6ebf9" fill-opacity="0.92"></circle><circle cx="54" cy="38" r="5.2" fill="#d6ebf9" fill-opacity="0.92"></circle><circle cx="47" cy="49" r="3.4" fill="#d6ebf9" fill-opacity="0.92"></circle><circle cx="11" cy="17" r="5" fill="#d6ebf9" fill-opacity="0.92"></circle><path d="M53 3 C50.8 7 49.3 9.2 49.3 11.3 a3.7 3.7 0 0 0 7.4 0 C56.7 9.2 55.2 7 53 3 Z" fill="#4f8fd3"></path><path d="M6 31 C4.8 33.4 4 34.6 4 35.8 a2.2 2.2 0 0 0 4.4 0 C8.4 34.6 7.2 33.4 6 31 Z" fill="#4f8fd3"></path></g><g filter="url(#dt-ink-1)" fill="none" stroke="#2a1d18"><path d="M19 54 L19 44 C14 41 10 36 10 32 C10 29 13 28 15 29.5 L19 33 L19 19 C19 15.5 24.5 15.5 24.5 19 L24.5 28 L24.8 14 C24.8 10.5 30.3 10.5 30.3 14 L30.3 28 L30.6 15 C30.6 11.5 36.1 11.5 36.1 15 L36.1 29 L36.4 20 C36.4 16.7 41.6 16.7 41.6 20 L41.6 38 C41.6 45 38 50 35 52 L35 54" stroke-width="2.3"></path><path d="M19 54 L19 44 C14 41 10 36 10 32 C10 29 13 28 15 29.5 L19 33 L19 19 C19 15.5 24.5 15.5 24.5 19 L24.5 28 L24.8 14 C24.8 10.5 30.3 10.5 30.3 14 L30.3 28 L30.6 15 C30.6 11.5 36.1 11.5 36.1 15 L36.1 29 L36.4 20 C36.4 16.7 41.6 16.7 41.6 20 L41.6 38 C41.6 45 38 50 35 52 L35 54" stroke-width="0.8" stroke-opacity="0.45" transform="translate(0.8 0.6)"></path><path d="M19.6 30 L19.4 22 M25 26 L25.2 17 M30.8 26 L30.9 18" stroke-width="0.9" stroke-opacity="0.55"></path><path d="M24.5 29.5 L24.5 32 M30.3 29.5 L30.3 32 M36.1 30.5 L36.1 33" stroke-width="1.3"></path><path d="M14.5 52.4 L39.5 52.2 M15.5 52.5 L14.6 62.6 M38.6 52.4 L39.6 62.6" stroke-width="2.2"></path><path d="M18 56.5 L36 56.3" stroke="#c4dcf2" stroke-width="1.8"></path><circle cx="18.3" cy="59.5" r="0.9" fill="#2a1d18" stroke="none"></circle><circle cx="35.8" cy="59.5" r="0.9" fill="#2a1d18" stroke="none"></circle><path d="M41.6 22 C42 17.4 46 14.4 50 14.6 C54 14.8 56.8 18.4 56.6 22.4 C56.3 26.6 52.6 29.6 48.6 29.4 C44.6 29.1 41.4 26 41.6 22" stroke-width="1.6"></path><path d="M45.2 19.4 C46.2 17.6 47.9 16.9 49.6 17" stroke="#ffffff" stroke-width="1.9"></path><path d="M48.8 38 C48.8 34.8 51.4 32.8 54 32.8 C56.8 32.8 59.2 35.2 59.1 38.2 C59 41 56.6 43.2 53.8 43.1 C51 43 48.8 40.8 48.8 38" stroke-width="1.5"></path><path d="M51.4 36.2 C52 35.2 53 34.8 54 34.9" stroke="#ffffff" stroke-width="1.5"></path><path d="M43.6 49 C43.6 47 45.2 45.6 47 45.6 C48.9 45.6 50.4 47.1 50.4 49 C50.4 50.9 48.8 52.4 47 52.4" stroke-width="1.3"></path><path d="M6 17 C6 14.2 8.3 12 11 12 C13.8 12 16 14.3 16 17 C16 19.8 13.7 22 11 22 C8.3 22 6 19.7 6 17.2" stroke-width="1.5"></path><path d="M8.6 15.4 C9.2 14.3 10.2 13.9 11.2 14" stroke="#ffffff" stroke-width="1.5"></path><path d="M52.6 3.2 C50.3 7.2 48.8 9.4 48.8 11.4 C48.8 13.6 50.6 15 52.6 15 C54.6 15 56.3 13.5 56.3 11.4 C56.3 9.4 54.8 7.2 52.6 3.2" stroke-width="1.5"></path><path d="M44.5 6.5 L46.8 8.6 M44 11.6 L46.6 12" stroke-width="1.2"></path><path d="M5.8 31.2 C4.6 33.4 3.8 34.6 3.8 35.8 C3.8 37 4.8 38 6 38 C7.2 38 8.2 37 8.2 35.8 C8.2 34.6 7.2 33.4 5.8 31.2" stroke-width="1.2"></path></g></svg></span>
@@ -142,6 +140,7 @@ body{
   </div>
   <p class="sr" id="announce" role="status" aria-live="polite"></p>
 </main>
+<div class="bye" id="bye" role="dialog" aria-label="Goodbye"><h2>See you soon!</h2><p>Swipe up from the bottom edge of your screen to close the app.</p><button type="button" id="back">Back to the timer</button></div>
 
 <script>
 (function () {
@@ -319,6 +318,8 @@ body{
 
   function startTask(id) {
     var t = TASKS[id];
+    ensureAudio();
+    lastSecond = -1; tac = true;   // so the first click is the high "tic"
     clearInterval(ticker);
     state = { phase: 'intro', task: id, startedAt: Date.now(), duration: t.seconds };
     setTimer(fmt(t.seconds));
@@ -336,13 +337,60 @@ body{
     }, 50);
     announce.textContent = t.name + ' started';
     ticker = setInterval(tick, 200);
+    tick();
+  }
+
+  // "Tic tac": two short wood-block clicks, high then low, once per second while a timer runs.
+  var audioCtx = null, lastSecond = -1, tac = false;
+  function ensureAudio() {   // must be called from a tap, or phones keep audio blocked
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    } catch (e) {}
+  }
+  function click(low) {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    var t = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(low ? 620 : 980, t);
+    o.frequency.exponentialRampToValueAtTime(low ? 420 : 700, t + 0.05);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.35, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(t); o.stop(t + 0.1);
+  }
+  // Bell for the end of a timer: three soft dings (a fundamental plus two inharmonic partials, like a small bell).
+  function ring() {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    var base = audioCtx.currentTime;
+    [0, 0.5, 1.0].forEach(function (offset, n) {
+      [[1, 0.32], [2.76, 0.14], [5.4, 0.06]].forEach(function (p) {
+        var t = base + offset, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = 'sine';
+        o.frequency.value = (n === 2 ? 1046 : 880) * p[0];
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(p[1], t + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+        o.connect(g); g.connect(audioCtx.destination);
+        o.start(t); o.stop(t + 1.15);
+      });
+    });
+  }
+  function tictac(second) {
+    if (second === lastSecond) return;
+    lastSecond = second;
+    tac = !tac;
+    click(tac);
   }
 
   function tick() {
     var elapsed = (Date.now() - state.startedAt) / 1000 * speed;
     var remaining = Math.max(0, state.duration - elapsed);
     setTimer(fmt(Math.ceil(remaining)));
-    if (remaining <= 0) goStandby('All done!');
+    if (remaining <= 0) { ring(); goStandby('All done!'); } else tictac(Math.ceil(remaining));
   }
 
   cards.forEach(function (c) {
@@ -366,18 +414,13 @@ body{
   var first = visible.play(); if (first && first.catch) first.catch(function () {});
   goStandbyInit();
   // A web app can't always close itself: browsers allow window.close() only in some installed apps.
-  var toast = document.getElementById('toast'), toastTimer = 0;
+  var bye = document.getElementById('bye');
   document.getElementById('close').addEventListener('click', function () {
     goStandby('');
     try { window.close(); } catch (e) {}
-    setTimeout(function () {
-      if (window.closed) return;
-      toast.textContent = 'Swipe up from the bottom edge to close the app.';
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 4000);
-    }, 300);
+    setTimeout(function () { if (!window.closed) bye.classList.add('show'); }, 250);
   });
+  document.getElementById('back').addEventListener('click', function () { bye.classList.remove('show'); });
 
   function goStandbyInit() { setTimer('00:00'); render(); }
 })();
